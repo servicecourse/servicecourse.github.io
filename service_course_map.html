@@ -1,0 +1,190 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>服務學習課程地圖</title>
+</head>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
+<body>
+  <div id="app" style= "font-family: 'Noto Sans TC','Open Sans', sans-serif;"><!--google font-->
+    <gmap-map
+      :style="currentStyle"
+      :center="center"
+      :zoom="10"
+      style="width: 100%; height: 100% ; float:left;">
+      <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" :content="infoContent" @closeclick="infoWinOpen=false" >
+      </gmap-info-window>
+      <gmap-marker
+         v-for="(m,i) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="false"
+        @click="toggleInfoWindow(m,i)"
+        @mouseover="statusText = m.text"
+        @mouseout="statusText = null">
+      </gmap-marker>
+      <div slot="visible" style="top: 5%; right: 5%; color: #4F4F4F; position: absolute; z-index: 100">
+         <h2>  {{statusText}} </h2>
+      </div>
+    </gmap-map>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.js"></script>
+<script src="https://cdn.rawgit.com/crew1274/vue2-google-map-example/0934045f/vue-google-maps.js"></script>
+
+<script>
+Vue.use(VueGoogleMap, {load: {key: 'AIzaSyBJElK1Oartgr4lYVuNYTaO6GpTlKcXQxk',libraries: 'places'},});
+
+document.addEventListener('DOMContentLoaded', function() {
+  new Vue({
+    el: '#app',
+    data: {
+      center: {lat: 23.1489444, lng: 120.357624},//台南地標
+      infoContent: '',
+      infoWinOpen: false,
+      currentMidx: null,
+      infoOptions:{pixelOffset: {width: 0, height: -35}},
+      statusText: '',
+      //地標
+      markers: [
+        {
+        position: {lat:23.0107572,lng:120.4146771},
+        text: '基督教長老教會-岡林教會',
+        infoText: '<h2>基督教長老教會-岡林教會課程資訊:</h2> <p>服務學習(三)-運用遠距課輔關懷偏鄉弱勢學童	徐之昇助理教授	學務處課指組	104(一)、104(二)</p> <p>社會設計的創新方案規劃與實踐	方雅慧博士後研究員	通識教育中心	104(一)</p> <p>服務學習(三)-資訊服務	楊中平副教授	資訊系	104(一)</p> <p>英語智能與社區服務	高實玫教授/鄒文莉教授	通識中心	104(二)、105(二)</p> <p>社會設計的方案規劃與實踐	方雅慧博士後研究員	通識中心	104(二)、105(一)</p> <p>社會設計的方案規劃與實踐	方雅慧博士後研究員	通識中心	104(二)、105(一)</p>'
+        }, 
+      {
+        position: {lat:23.0094592,lng:120.408578},
+        text: '公舘社區發展協會',
+        infoText: '<h2>公舘社區發展協會課程資訊:</h2> <p>人文創新與社會實踐	王秀雲副教授等7人	通識中心	103(二)</p> <p>人道建築的在地規劃與實踐	簡聖芬副教授	通識教育中心	104(一)</p> <p>社會設計的創新方案規劃與實踐	方雅慧博士後研究員	通識教育中心	104(一)、104(二)、105(一)</p> <p>英語智能與社區服務	高實玫教授/鄒文莉教授	通識中心	104(二)</p> <p>社區規劃與地方行銷	張秀慈助理教授	都計系	104(二)</p> <p>自由軟體與社群經營	楊中平副教授	資訊系	104(二)、105(一)</p> <p>創意行銷:社區、文化與場域	仲曉玲助理教授/陳慧琴助理教授	通識中心	105(二)</p>'
+      },
+      {
+        position: {lat:23.0628608,lng:120.3812068},
+        text: '左鎮國小',
+        infoText: '<h2>左鎮國小課程資訊:</h2> <p>人道建築的在地規劃與實踐 簡聖芬副教授 通識教育中心 105(一)</p>	<p>社會設計的方案規劃與實踐	方雅慧博士後研究員	通識中心	105(一)</p>	<p>社會設計的引導與協作領導	方雅慧博士後研究員	通識中心	105(二)</p>	<p>西拉雅語文數位復育及線上教育	楊中平副教授/盧文祥副教授/陳麗君副教授/方雅慧博士後研究員	通識中心	105(二)</p>'
+      },
+       {
+        position: {lat:23.3527049802915,lng:120.4169969802915},
+        text: '白河區公所',
+        infoText: '<h2>白河區公所課程資訊:</h2> <p>個案管理與社區照護	劉立凡教授	老年所	105(二)</p>'
+       },
+       {
+        position: {lat:23.250214,lng:120.2703203},
+        text: '甲中國小',
+        infoText: '<h2>甲中國小課程資訊:</h2> <p>戶外探索設計與實施	朱朝煌助理教授	師培中心	105(一)</p>	<p>服務學習(三)-慈幼與服務學習	周士琦教官	軍訓室	105(二)</p>'
+       },
+       {
+        position: {lat:23.1355241,lng:120.2299151},
+        text: '松林國小',
+        infoText: '<h2>松林國小課程資訊:</h2> <p>戶外探索設計與實施	朱朝煌助理教授	師培中心	105(一)</p>'
+       },
+       {
+        position: {lat:23.1030064,lng:120.2582382},
+        text: '台灣外展教育發展基金會',
+        infoText: '<h2>台灣外展教育發展基金會課程資訊:</h2> <p>童軍教育	朱朝煌助理教授	師培中心	104(一)</p>'
+       },
+       {
+        position: {lat:22.9761614,lng:120.3131337},
+        text: '悠然山莊安養中心',
+        infoText: '<h2>悠然山莊安養中心課程資訊:</h2> <p>高齡者的教育與學習	陳麗光助理教授	老年學研究所	103(二)</p>'
+       },
+       {
+        position: {lat:23.3821305,lng:120.388435},
+        text: '蓮心園',
+        infoText: '<h2>蓮心園課程資訊:</h2> <p>服務學習(二)-關懷弱勢	顏盟峰副教授	會計系	100(二)</p>'
+       },
+       {
+        position: {lat:23.3087224,lng:120.2957214},
+        text: '新營老人長期照顧中心',
+        infoText: '<h2>新營老人長期照顧中心課程資訊:</h2><p>醫療品質管理	呂執中教授	工業與資訊管理學系	102(一)</p>'
+       },
+       {
+        position: {lat:23.1141935,lng:120.2314285},
+        text: '安定國中',
+        infoText: '<h2>安定國中課程資訊:</h2><p>服務學習(三)	周學雯助理教授	體育室	98(二)</p>'
+       },
+       {
+        position: {lat:23.2267164,lng:120.3492262},
+        text: '台南市牧德關懷協會',
+        infoText: '<h2>台南市牧德關懷協會課程資訊:</h2><p>移民與語言社會文化	陳麗君副教授	台文系	103(二)</p>'
+       },
+       {
+        position: {lat:23.2556773,lng:120.4350398},
+        text: '嶺南社區發展協會',
+        infoText: '<h2>嶺南社區發展協會課程資訊:</h2><p>人文創新與社會實踐	王秀雲副教授等7人	通識中心	103(二)</p>'
+       },
+       {
+        position: {lat:23.125363,lng:120.1629643},
+        text: '塭內國小',
+        infoText: '<h2>塭內國小課程資訊:</h2><p>服務學習(三)-愛，從我開始	陳鈞宜教官	學務處教官室	105(二)</p>'
+       },
+       {
+        position: {lat:23.144003,lng:120.1550803},
+        text: '通興國小',
+        infoText: '<h2>通興國小課程資訊:</h2><p>服務學習(三)	韓世偉組長	學務處	99(二)</p>'
+       },
+       {
+        position: {lat:23.144003,lng:120.1550803},
+        text: '通興國小',
+        infoText: '<h2>通興國小課程資訊:</h2><p>服務學習(三)	韓世偉組長	學務處	99(二)</p>'
+       },
+       {
+        position: {lat:23.0250196,lng:120.3465064},
+        text: '口埤實驗國小',
+        infoText: '<h2>口埤實驗國小課程資訊:</h2><p>英語智能與社區服務	高實玫教授/鄒文莉教授	通識中心	105(二)</p>'
+       },
+       {
+        position: {lat:23.033537,lng:120.3100421},
+        text: '新化國中',
+        infoText: '<h2>新化國中課程資訊:</h2><p>服務學習(三)	周學雯助理教授	體育室	98(二)</p>'
+       },
+       {
+        position: {lat:23.0203028,lng:120.2842647},
+        text: '新化區崙頂里',
+        infoText: '<h2>新化區崙頂里課程資訊:</h2><p>醫用台語(中階)	蔡美慧副教授	醫學系	102(二)</p>'
+       },
+       {
+        position: {lat:23.2454891,lng:120.1577768},
+        text: '中洲國小',
+        infoText: '<h2>中洲國小課程資訊:</h2><p>服務學習(三)-慈幼與服務學習	周士琦教官	學務處課指組	104(二)</p>'
+       },
+       {
+        position: {lat:23.2363663,lng:120.1731043},
+        text: '學甲國小',
+        infoText: '<h2>學甲國小課程資訊:</h2><p>服務學習(三)-愛，從我開始	陳鈞宜教官	學務處教官室	104(一)</p>'
+       },
+       {
+        position: {lat:23.2993528,lng:120.2993528},
+        text: '仁光國小',
+        infoText: '<h2>仁光國小課程資訊:</h2><p>服務學習(三)-慈幼與服務學習	蔡慧珍教官	學務處課指組	101(二)</p>'
+       },
+       {
+        position: {lat:23.2671299,lng:120.2439127},
+        text: '竹埔國小',
+        infoText: '<h2>竹埔國小課程資訊:</h2><p>服務學習(三)	韓世偉組長	學務處課指組	98(二)</p>'
+       },
+      ]
+    },
+
+    methods:{
+        setPlace(place) {
+        this.latLng = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        }},
+        toggleInfoWindow: function (marker,idx){
+        this.infoWindowPos = marker.position ;
+        this.infoContent = marker.infoText;
+        //check if its the same marker that was selected if yes toggle
+        if(this.currentMidx == idx)
+        {this.infoWinOpen = !this.infoWinOpen}
+        //if different marker set infowindow to open and reset current marker index
+        else
+         {this.infoWinOpen = true;
+          this.currentMidx = idx;}
+                }}
+  });
+});
+</script>
+</body>
+</html>
