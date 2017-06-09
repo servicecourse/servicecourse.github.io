@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
   new Vue({
     el: '#app',
     data: {
-      center: {lat: 23.1489444, lng: 120.357624},//起始在台南地標
+      center: {lat: 23.1489444, lng: 120.357624},//起始地標
       infoContent: '',
       infoWinOpen: false,
       currentMidx: null,
@@ -50,10 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
       //地標
       markers: [
         {
-        position: {lat:23.0107483,lng:120.4170107},
-        text: '基督教長老教會-岡林教會',
+        position: {lat:23.0107483,lng:120.4170107}, //經緯度
+        text: '基督教長老教會-岡林教會', //地點名稱
+        //街景圖的參數
         heading: 245.75,
         pitch: 7.33,
+        //點擊顯示的資訊 可以使用常用的html語法
         infoText: '<h2>基督教長老教會-岡林教會課程資訊:</h2> <p>服務學習(三)-運用遠距課輔關懷偏鄉弱勢學童	徐之昇助理教授	學務處課指組	104(一)、104(二)</p> <p>社會設計的創新方案規劃與實踐	方雅慧博士後研究員	通識教育中心	104(一)</p> <p>服務學習(三)-資訊服務	楊中平副教授	資訊系	104(一)</p> <p>英語智能與社區服務	高實玫教授/鄒文莉教授	通識中心	104(二)、105(二)</p> <p>社會設計的方案規劃與實踐	方雅慧博士後研究員	通識中心	104(二)、105(一)</p> <p>社會設計的方案規劃與實踐	方雅慧博士後研究員	通識中心	104(二)、105(一)</p>'
         }, 
       {
